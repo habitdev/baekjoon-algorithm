@@ -2,16 +2,14 @@ const input = require('fs').readFileSync('/dev/stdin').toString().trim().split('
 
 const count = Number(input[0]); 
 const str = input[1]; 
+const MOD = 1234567891n;
+let sum = 0n;
+let pow = 1n;
 
-const alphabets = ['a', 'b', 'c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
-
-
-let sum = 0;
 for (let index = 0; index < str.length; index++) {
-	const element = str[index];
-	const num = alphabets.indexOf(element);
-
-	sum = sum + (num+1) * (Math.pow(31,index));
+  const num = BigInt(str.charCodeAt(index) - 96);
+  sum = (sum + (num * pow) % MOD) % MOD;
+  pow = (pow * 31n) % MOD;
 }
 
-console.log(sum);
+console.log(sum.toString());
